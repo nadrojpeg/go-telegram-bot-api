@@ -4,7 +4,7 @@
  * Licensed undert the MIT License. See the LICENSE file for more details.
  *
  * (See the Golang conventions on documentation)
- * Goal of this project:
+ * Goals of this project:
  * - learn Golang
  * - learn Telegram API
  * - create a self-documented library with extensive explanations of the Telegram API
