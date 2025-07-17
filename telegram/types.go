@@ -4,6 +4,12 @@
  * Licensed undert the MIT License. See the LICENSE file for more details.
  *
  * (See the Golang conventions on documentation)
+ * Goal of this project:
+ * - learn Golang
+ * - learn Telegram API
+ * - create a self-documented library with extensive explanations of the Telegram API
+ *   (maybe clarify the obscure or bad documentation)
+ *   (people that write documentations hate humanity)
  */
 
 package telegram
@@ -38,6 +44,7 @@ type User struct {
 	AddedToAttachmentMenu bool
 
 	// [Optional] True if the bot can be invited to groups. Returned only in GetMe
+
 	CanJoinGroups bool
 
 	// [Optional] True if privacy mode is disabled for the bot. Returned only in GetMe
@@ -155,3 +162,73 @@ type TextQuote struct {
 	IsManual bool
 }
 
+// This struct contains parameters for the message that is being sent
+type ReplyParameters struct {
+	// Identifier of the message that will be replied to in the current chat, or in the chat chat_id if it is specified
+	MessageID int64
+
+	// [Optional] If the message to be replied to is from a different chat
+	// unique identifier for the chat or username of the channel (in the format
+	// @channelusername). Not supported for messages sent on behalf of a business
+	// account
+	// Should be Int or String, but Golang doesn't have union
+	// For now we use string, but I have to think carefully to this
+	ChatID string
+
+	// [Optional] Pass True if the message should be sent
+	// even if the specified message to be replied to is not found.
+	// Always False for replies in another chat or forum topic.
+	// Always True for messages sent on behalf of a business account
+	AllowSendingWithoutReply bool
+
+	// [Optional] Quoted part of the messages to be replied to; 0 - 1024
+	// characters after entities parsing. The quote must be an exact substring of
+	// the message to be replied to, including "bold", "italic", "underline",
+	// "strikethrough", "spoiler", and "custom_emoji" entities. The message
+	// will fail to send if the quote isn't found in the original message
+	Quote string
+
+	// [Optional] Mode for parsing entities in the quote. See formatting
+	// options for more details
+	QuoteParseMode string
+
+	// [Optional] A JSON-serialized list of special entities that appear in
+	// the quote. It can be specified instead of quote_parse_mode
+	QuoteEntities []MessageEntity
+
+	// [Optional] Position of the quote in the original message in UTF-16
+	// code units
+	QuotePosition Integer
+}
+
+// MessageOrigin, another "union".
+// - MessageOriginUser
+// - MessageOriginHiddenUser
+// - MessageOriginChat
+// - MessageOriginChannel
+
+// This struct contains information in the case the message
+// was originally sent by a known user
+type MessageOriginUser struct {
+	// Type of the message origin, always "user"
+	Type string
+
+	// Date the message was sent originally in Unix time
+	Date int64
+
+	// User that sent the message originally
+	SenderUser User
+}
+
+// This struct contains information in the case the message
+// was originally sent by an unknown user
+type MessageOriginHiddenUser struct {
+	// Type of the message origin, always "hidde_user"
+	Type string
+
+	// Date the messahe was sent originally in Unix time
+	Date int64
+
+	// Name of the user that sent the message originally
+	SendUserName string
+}
