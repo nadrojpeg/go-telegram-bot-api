@@ -8,8 +8,8 @@
  * - learn Golang
  * - learn Telegram API
  * - create a self-documented library with extensive explanations of the Telegram API
- *   (maybe clarify the obscure or bad documentation)
- *   (people that write documentations hate humanity)
+ *   (maybe clarifying the obscure or bad documentation)
+ *   (people who write documentation hate humanity)
  */
 
 package telegram
